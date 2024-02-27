@@ -1,0 +1,9 @@
+#vscode
+.vscode
+
+#build
+build
+
+#other
+output
+lib
