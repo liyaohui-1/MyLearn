@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <memory>
+#include <vector>
 
 class A
 {
@@ -39,6 +41,14 @@ int main(int argc,char* argv[])
     std::cout << "y: " << y << std::endl; //2
     std::cout << "z: " << z << std::endl; //0
     std::cout << "tmp.size(): " << tmp.size() << std::endl; //2
+
+    std::shared_ptr<std::vector<std::string>> shp1 = std::make_shared<std::vector<std::string>> ();
+    std::string tmp1 = "123456";
+    shp1->push_back(tmp1);
+    std::vector<std::string>::const_iterator iter = shp1->cbegin();
+    for(;iter != shp1->cend();iter++){
+        std::cout << "str::" << *iter << std::endl;
+    }
 
     return 0;
 }

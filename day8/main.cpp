@@ -1,6 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <initializer_list>
+#include <list>
+#include <map>
 
 constexpr int size()
 {
@@ -14,10 +17,18 @@ int foo()
     return x;
 }
 
+void error_msg(std::initializer_list<std::string> il)
+{
+    for(auto beg = il.begin(); beg != il.end(); beg++)
+        std::cout << *beg << " ";
+
+    std::cout << std::endl;
+}
+
 int main()
 {
     //1.long long 类型
-    std::cout << "sizeof(long long): " << sizeof(long long) << std::endl;
+    // std::cout << "sizeof(long long): " << sizeof(long long) << std::endl;
 
     //2.列表初始化、vector列表初始化
     int units_sold0 = 0;
@@ -65,10 +76,85 @@ int main()
     // std::cout << "sum: " << sum << std::endl;
     //decltype处理顶层const和引用的方式与auto有些许不同，如果decltype使用的表达式是一个变量，则decltype返回该变量的类型(包括const和引用在内)
 
-    decltype(ci) x = 0;
-    decltype(cr) y = x;
+    decltype(ci) x1 = 0;
+    decltype(cr) y = x1;
     // decltype(cr) z; //错误：z是一个引用，必须初始化
-    
+
+    //14.标准库函数begin和end
+    int arr[10] = {0,1,2,3,4,5,6,7,8,9};
+    int *beg = std::begin(arr);
+    int *last = std::end(arr);
+    while(beg != last && *beg >=0){
+        ++(*beg++);
+    }
+    // for(auto it : arr)
+    // {
+    //     std::cout << it << std::endl;
+    // }
+
+    //15.使用auto和decltype简化声明
+    int ia [3][4] = {{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+    for(auto p =std::begin(ia);p != std::end(ia); p++)
+    {
+        for(auto q = std::begin(*p);q != std::end(*p); q++)
+        {
+            // std::cout << *q << " ";
+        }
+        // std::cout<<std::endl;
+    }
+
+    //16.除法的舍入规则
+    int a1 = 100;
+    int a2 = 3;
+    int a3 = -3;
+    // std::cout << "a1/a2: " << a1/a2 <<",a1/a3: " << a1/a3 <<std::endl;
+    // std::cout << "a1%a2: " << a1%a2 <<",a1%a3: " << a1%a3 <<std::endl;
+
+
+    //17.用大括号包围的值列表赋
+    int  k = 0;
+    // k = {3.14}; //错误：窄化转换，丢失精度
+
+    //20.标准库initializer_list类
+    std::string expected = "expected";
+    std::string actual = "actual";
+    error_msg({expected,actual});
+
+    std::vector<std::string> vv1 = {"a","an","the"};
+    for(const auto &iter : vv1)
+        std::cout << iter << " ";
+    std::cout<<std::endl;
+    std::list<std::string> vv2 = {"c","cat","car"};
+    for(const auto &iter : vv2)
+        std::cout << iter << " ";
+    std::cout << std::endl;
+    std::map<std::string,std::string> mmp = {{"123","456"},{"789","000"}};
+    for(const auto &it : mmp)
+        std::cout << "key: " << it.first << ",value:" << it.second << " ";
+    std::cout << std::endl;
+
+    std::map<std::string,int> mlp;
+    std::vector<std::string> index = {"li","wang","zhao","sun","li"};
+    for(auto iter : index)
+    {
+        if(mlp.count(iter) > 0)
+            mlp[iter]++;
+        else
+            mlp.insert(std::make_pair(iter,1));
+    }
+    for(const auto &it : mlp)
+        std::cout << "key: " << it.first << ",value:" << it.second << std::endl;
+
+    //23.使用decltype简化返回类型定义
+    int odd[] = {1,3,5,7,9};
+    int even[] = {0,2,4,6,8};
+    //有一个地方需要注意：decltype并不负责把数组类型转换成对应的指针，所以decltype的结果还是一个数组，
+    //想要表示返回指针还必须在函数声明时加一个*符号。
+    auto Func1 = [&odd,&even](int i) -> decltype(odd)* {return (i % 2) ? &odd : & even;};
+    auto ret = Func1(5);
+    for(auto it : *ret)
+        std::cout << it <<" ";
+    std::cout << std::endl;
 
     return 0;
 }

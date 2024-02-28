@@ -10,7 +10,7 @@ project(My)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/output)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 
-# add_subdirectory(day1)
+add_subdirectory(day1)
 # add_subdirectory(day2)
 # add_subdirectory(day3)
 # add_subdirectory(day4)
