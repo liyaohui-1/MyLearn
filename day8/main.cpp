@@ -156,5 +156,26 @@ int main()
         std::cout << it <<" ";
     std::cout << std::endl;
 
+    //33.容器的非成员函数swap
+    std::vector<int> swap1 ={1,2,3,4,5,6,7,8,9,0};
+    std::vector<int> swap2 ={6,7,8,9,0};
+    std::cout << "before swap" << std::endl;
+    for(auto swp1 : swap1)
+        std::cout << swp1 << " ";
+    std::cout << std::endl;
+
+    for(auto swp2 : swap2)
+        std::cout << swp2 << " ";
+    std::cout << std::endl;
+    swap(swap1,swap2);
+    std::cout << "after swap" << std::endl;
+    for(auto swp1 : swap1)
+        std::cout << swp1 << " ";
+    std::cout << std::endl;
+
+    for(auto swp2 : swap2)
+        std::cout << swp2 << " ";
+    std::cout << std::endl;
+
     return 0;
 }

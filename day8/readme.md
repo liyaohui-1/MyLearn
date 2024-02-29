@@ -80,3 +80,105 @@ C++11新标准为了简化函数返回值类型，使用**尾置返回类型**�
 constexpr函数是指能用于常量表达式的函数。定义constexpr函数的方法与其他函数类似，不过要遵循几项约定：函数的返回类型和形参的类型都得是字面值类型，而且函数体中有且只有一条return语句。
 执行constexpr函数时，编译器把对constexpr函数的调用替换成结果值。为了能在编译过程中随时展开，constexpr被隐式地指定为内联函数。
 - **注意:**内联函数和constexpr函数的定义需要放在头文件中。**原因**:内联函数和constexpr可以在程序中多次定义。毕竟，编译器要想展开函数仅有声明是不够的，还需要函数的定义。不过，对于某个给定的内联函数或者constexpr函数来说，它的多个定义必须完全一致。
+## 25.使用=default生成默认构造函数
+C++11新标准中，如果我们需要默认的行为，那么可以在参数列表后面加上 **=default**来要求编译器生成构造函数。
+## 26.类对象成员的类内初始化
+对类内部需要设置默认值的成员变量进行类内初始化。
+## 27.委托构造函数
+C++11新标准扩展了构造函数初始值的功能，使得我们可以定义所谓的**委托构造函数**。一个委托构造函数使用它所属类的其它构造函数执行它自己初始化过程，或者说它把它自己的一些(或者全部)职责委托给了其它构造函数。
+和其他构造函数一样，一个委托构造函数也有一个成员初始值的列表和一个函数体。在委托构造函数内，成员初始值列表只有一个唯一的入口，就是类名本身。和其他成员初始值一样，类名后面紧跟圆括号括起来的参数列表，参数列表必须与类中另外一个构造函数匹配。
+例子如下:
+```
+    class Sales_data{
+        public:
+            // 非委托构造函数使用对应的实参初始化成员
+            Sales_data(std::string s,unsigned cnt,double price):
+            bookNo(s),units_sold(cnt),revenue(cnt*price) {}
+            // 其余构造函数全部委托给另外一个构造函数
+            Sales_data():Sales_data(" ",0,0) {}
+            Sales_data(std::string s):Sales_data(s,0,0) {}
+            Sales_data(std::istream &is):Sales_data()
+                                                { read(is, *this); }
+        private:
+            std::string bookNo;
+            unsigned units_sold;
+            double revenue;
+    };
+```
+当一个构造函数委托给另一个构造函数时，受委托的构造函数的初始值列表和函数体被依次执行。在Sales_data类中，受委托的构造函数体内恰好是空的。加入函数体包含有代码的话，将先执行这些代码，然后控制权才会交还给委托者的函数体。
+## 28.constexpr构造函数
+constexpr构造函数用于生成constexpr对象以及constexpr函数的参数或返回类型。
+例如
+```
+    class Debug{
+        public:
+            constexpr Debug(bool b = true) : hw(b), io(b), other(b) { }
+            constexpr Debug(bool h,bool i,bool o):
+                        hw(h), io(i), other(o) { }
+            constexpr bool any() { return hw||io||other;}
+            void set_io(bool b) {io = b;}
+            void set_hw(bool b) {hw = b;}
+            void set_other(bool b) {other = b;}
+
+        private:
+            bool hw;    //硬件错误
+            bool io;    //io错误
+            vool other; //其他错误
+    }
+
+    int main()
+    {
+        constexpr Debug io_sub(false, true, false);     // 调试IO
+        if(io_sub.any())                                // 等价于if(true)
+            cerr << "print appropriate error message" << endl;
+        constexpr Debug prod(false);                    // 无调试
+        if(prod.any())                                  // 等价于if(false)
+            cerr << "print an error message" << endl; 
+
+        return 0;
+    }
+    
+```
+## 29.用string对象处理文件名
+C++11新标准中，文件名既可以是库类型string对象，也可以是C风格字符串。
+## 30.array和forward_list容器
+array(固定大小的数组)和forward_list(单向链表)是新C++新标准增加的类型。与内置数组相比,array是一种更安全、更容易使用的数组类型。与内置数组类型，array对象的大小是固定的。因此，array不支持添加和删除元素以及改变容器大小的操作。forward_list的设计目标是达到与最好的手写的单向链表数据结构相当的性能。因此，forward_list没有size操作，因为保存或计算大小就会比手写链表多出额外的开销。
+## 31.容器的cbegin和cend函数
+当不需要写访问时，应使用cbegin和cend。
+例如：
+```
+    list<string> a = {"Milton", "Shakespeare", "Austen"};
+    list<string>::const_iterator it6 = a.cbegin();
+```
+## 32.容器的列表初始化
+在新标准中，我们可以对一个容器进行列表初始化。
+例：
+```
+    list<string> authors = {"Milton", "Shakespeare", "Austen"};
+    vector<const char*> articles = {"a", "an", "the"};
+```
+## 33.容器的非成员函数swap
+在C++11新标准库中，容器既提供成员函数版本的swap,也提供非成员版本的swap。统一使用非成员版本的swap是一个好习惯。
+## 34.容器insert成员的返回值
+在新标准下，接受元素个数或范围的insert版本返回指向第一个新加入元素的迭代器。
+## 35.容器的emplace成员
+新标准引入了三个新成员-emplace_front、empalce_back和emplace，这些操作构造而不是拷贝元素。这些操作分别对应push_front、push_back和insert。运行我们将元素放在头部、尾部或者一个指定位置。
+当调用push或insert成员函数时，我们将元素类型的对象传递给它们，这些对象被拷贝到容器当中。而当我们调用一个emplace成员函数时，则是将参数传递给元素类型的构造函数。emplace成员使用这些参数在容器管理的内存空间中直接构造元素。
+```
+    //在c的末尾构造一个Sales_data对象
+    //使用三个参数的Sales_data构造函数
+    c.emplace_back("978-0590353403",15,15.99);
+    //错误，没有接受三个参数的push_back版本
+    c.push_back("978-0590353403",15,15.99);
+    //正确，创建一个临时的Sales_data对象传递给push_back
+    c.push_back(Sales_data("978-0590353403",15,15.99));
+```
+## 36.shrink_to_fit
+在新标准库中，我们可以调用shrink_to_fit函数来要求容器退回不需要的内存空间。size和capacity不相等时，capacity多余出来的空间。
+## 37.string的数值转换表达式
+新标准引入了多个函数，可以实现数组数据与标准库string之间的转换
+```
+    int i = 42;
+    string s =to_string(i); //将整数i转换为字符串表现形式
+    double d = stod(s);     //将字符串s转换为浮点数
+```
