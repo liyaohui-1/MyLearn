@@ -182,3 +182,51 @@ array(固定大小的数组)和forward_list(单向链表)是新C++新标准增�
     string s =to_string(i); //将整数i转换为字符串表现形式
     double d = stod(s);     //将字符串s转换为浮点数
 ```
+## 38.lambda表达式
+到目前为止，我们使用过的仅有两种可调用对象势函数和函数指针。还有其他两种可调用的对象：重载了函数调用运算符的类，以及**lambda表达式**。
+一个lambda表达式表示一个可调用的代码单元。我们可以将其理解为一个未命名的内联函数。与任何函数类似，一个lambda具有一个返回类型、一个参数列表和一个函数体。但与函数不同，lambda可能定义在函数内部。一个lambda表达式具有如下形式：
+
+```[capture list](parameter list) -> return type[function body]```
+其中，capture list(捕获列表)是一个lambda所在函数中定义的局部变量的列表(通常为空);return type、parameter list和function body与任何普通函数一样，分别表示返回类型、参数列表和函数体。但是，与普通函数不同。lambda必须使用尾置返回来指定返回类型。
+注意：1. 如果lambda的函数体包含任何单一return语句之外的内容，且未指定返回类型，则返回void。
+     2. lambda不能有任一参数
+     3. lambda表达式能在函数中定义函数，并且可以使用```[]```捕获函数内部使用的局部变量，捕获方式有两种：分别是值捕获和引用捕获，值捕获不会修改捕获后的局部变量值，引用捕获会改变捕获的局部变量的值。
+## 39.lambda表达式中的尾置返回类型
+当我们需要为一个lambda定义返回类型时，必须使用尾部返回类型。
+## 40.标准库bind函数
+bind是标准库函数，它定义在头文件functionl中。可以将bind函数看做一个通用的函数适配器，它接受一个可调用的对象，生成一个新的可调用对象“适应”原对象的参数列表。
+调用bind的一般形式为：
+```auto newCallable = bind(callable,arg_list)```
+其中，newCallable本身是一个可调用对象，arg_list是一个逗号分隔的参数列表，对应给定的callable的参数。即，当我们调用newCallable时，newCallable会调用callable，并传递给它arg_list中的参数。
+arg_list中的参数可能包含形如_n的名字，其中n是一个整数。这些参数事“占位符”，表示newCallable的参数，它们占据了传递给newCallable的参数的“位置”。数值n表示生成的可调用对象中参数的位置:_1为newCallable的第一个参数，_2为第二个参数，依次类推。
+## 41.关联容器的列表初始化
+在新标准下，我们也可以对关联容器进行值初始化。
+```
+    map<string,string> authors = {{"Joyce","James"},
+                                  {"Austen","Jane"},
+                                  {"Dickens","Charles"}};
+```
+## 42.列表初始化pair的返回类型
+在新标准下，我们可以对返回值进行列表初始化。
+```
+    pair<string,int> process(vector<string> &v)
+    {
+        //处理v
+        if(!v.empty())
+            return {v.back(),v.back().size()};
+        else
+            return pair<string,int> ();
+    }
+```
+## 43.pair的列表初始化
+在新标准下，创建一个pair最简单的方法是在参数列表中使用花括号初始化。也可以调用make_pair或显式构造pair。一个insert调用中的参数
+```
+    //向word_count插入word的四种方法
+    word_count.insert({word,1});
+    word_count.insert(make_pair(word,1));
+    word_count.insert(pair<string,size_t> (word,1));
+    word_count_insert(map<string,size_t>::value_type(word,1));
+
+```
+## 44.无序关联容器
+新标准定义了4个无序关联容器。

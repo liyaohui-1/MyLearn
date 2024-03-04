@@ -4,6 +4,7 @@
 #include <initializer_list>
 #include <list>
 #include <map>
+#include <algorithm>
 
 constexpr int size()
 {
@@ -175,6 +176,18 @@ int main()
 
     for(auto swp2 : swap2)
         std::cout << swp2 << " ";
+    std::cout << std::endl;
+
+    //39.lambda表达式中的尾置返回类型
+    std::vector<int> tranVector;
+    tranVector.push_back(10);
+    tranVector.push_back(-20);
+    for(auto it : tranVector)
+        std::cout << it << " ";
+    std::cout << std::endl;
+    std::transform(tranVector.begin(),tranVector.end(),tranVector.begin(),[](int i ) -> int{return i < 0 ? -i : i;});
+    for(auto it : tranVector)
+        std::cout << it << " ";
     std::cout << std::endl;
 
     return 0;
