@@ -190,5 +190,32 @@ int main()
         std::cout << it << " ";
     std::cout << std::endl;
 
+    //51.范围for语句不能用于动态分配数组
+    int *pp = new int[42];
+    for(int i = 0; i <42;i++)
+        pp[i] = i;
+    for(int i = 0; i < 42; i++)
+        std::cout <<"pp["<<i <<"]:" <<i << " ";
+    std::cout << std::endl;
+    if(pp){
+        delete [] pp;
+        pp = nullptr;
+    }
+    //54.allocator
+    std::allocator<std::string> alloc;   //可以分配string的allocator对象
+    auto const ap = alloc.allocate(3);    //分配3个未初始化的string,这个allocate调用为n个string分配了内存
+    auto aq = ap;   //q指向最后构造的元素之后的位置
+    alloc.construct(aq++);   //*q为空指针
+    alloc.construct(aq++,10,'c');   //*q为cccccccccc
+    alloc.construct(aq++,"hi");     //*q为hi
+
+    //注意：还未构造对象的情况下就使用原始内存是错误的
+    //当我们使用完对象后，必须对每个构造的元素调用destroy来销毁它们。函数destroy接受一个指针，对指向的对象执行析构函数
+    while(*aq != *ap)
+        alloc.destroy(--aq);//释放我们真正构造的string
+
+    //释放内存通过deallocate来完成
+    alloc.deallocate(ap,3);
+    
     return 0;
 }
