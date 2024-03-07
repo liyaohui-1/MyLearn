@@ -5,6 +5,7 @@
 #include <list>
 #include <map>
 #include <algorithm>
+#include <utility>
 
 constexpr int size()
 {
@@ -216,6 +217,12 @@ int main()
 
     //释放内存通过deallocate来完成
     alloc.deallocate(ap,3);
-    
+
+    //59.move
+    int&& rr1 = 42;
+    int&& rr2 = std::move(rr1);
+
+    rr1++;
+
     return 0;
 }
