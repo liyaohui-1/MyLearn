@@ -1,5 +1,7 @@
 #include <iostream>
 #include <functional>
+#include <map>
+#include <algorithm>
 
 //普通函数
 int commFunc(int lhs,int rhs)
@@ -27,6 +29,14 @@ class Randy
         int randy_function(int lhs,int rhs){return lhs+rhs;}
         static int static_randy_function(int lhs,int rhs){return lhs+rhs;}
 
+};
+
+std::map<std::string,std::function<int(int,int)>> binOps = {
+    {"+",std::plus<int> ()},
+    {"-",std::minus<int> ()},
+    {"*",std::multiplies<int> ()},
+    {"/",std::divides<int> ()},
+    {"%",std::modulus<int> ()},
 };
 
 
@@ -64,10 +74,19 @@ int main()
     result = callback(1,2);
     std::cout << "class member function : " << result <<std::endl;
 
-    //类静态成员韩式
+    //类静态成员
     callback = Randy::static_randy_function;
     result = callback(1,2);
     std::cout << "static class member function : " << result <<std::endl;
+
+    int left,right;
+    std::string op;
+    while(true)
+    {
+        std::cin>>left>>op>>right;
+        std::cout <<left << op << right << "="<< binOps[op](left,right) << std::endl;
+    }
+    
 
     return 0;
 }

@@ -343,3 +343,25 @@ Foo& Foo::operator=(const Foo& rhs) &
     return *this;
 }
 ```
+## 64.function类模板
+见day10
+## 65.explicit类型转换运算符
+C++11新标准引入了**显式地类型转换运算符**
+```
+class SmallInt{
+    public:
+        SmallInt(int i = 0):val(i)
+        {
+            if(i < 0 || i > 255)
+                throw std::out_of_range("Bad SmallInt Value");
+        }
+        //编译器不会自动执行这一类型的转换
+        //这里有一个语法：operator T()，实现重载隐式转换，将返回值隐式转换为T类型
+        explicit operator int() const {return val;} 
+    private:
+        std::size_t val;
+}
+SmallInt si = 3; //正确：SmallInt的构造函数不是显式转换的
+si + 3; //错误：此处需要隐式地类型转换，蛋类的运算符要求是显式的
+static_cast<int>(si) + 3;   //正确：显式地请求类型转换
+```

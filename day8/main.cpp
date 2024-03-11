@@ -26,6 +26,19 @@ void error_msg(std::initializer_list<std::string> il)
 
     std::cout << std::endl;
 }
+class SmallInt{
+    public:
+        SmallInt(int i = 0):val(i)
+        {
+            if(i < 0 || i > 255)
+                throw std::out_of_range("Bad SmallInt Value");
+        }
+        //编译器不会自动执行这一类型的转换
+        explicit operator int() const {return val;} 
+    private:
+        std::size_t val;
+};
+
 
 int main()
 {
@@ -221,6 +234,11 @@ int main()
     //59.move
     int&& rr1 = 42;
     int&& rr2 = std::move(rr1);
+
+    //65.explicit类型转换运算符
+    SmallInt si = 3; //正确：SmallInt的构造函数不是显式转换的
+    // si + 3; //错误：此处需要隐式地类型转换，蛋类的运算符要求是显式的
+    static_cast<int>(si) + 3;   //正确：显式地请求类型转换
 
     rr1++;
 
