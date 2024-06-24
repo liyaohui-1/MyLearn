@@ -32,11 +32,11 @@ class Randy
 };
 
 std::map<std::string,std::function<int(int,int)>> binOps = {
-    {"+",std::plus<int> ()},
-    {"-",std::minus<int> ()},
-    {"*",std::multiplies<int> ()},
-    {"/",std::divides<int> ()},
-    {"%",std::modulus<int> ()},
+    {"+",[](int a, int b)->int{return a+b;}},
+    {"-",[](int a, int b)->int{return a-b;}},
+    {"*",[](int a, int b)->int{return a*b;}},
+    {"/",[](int a, int b)->int{return a/b;}},
+    {"%",[](int a, int b)->int{return a%b;}},
 };
 
 
