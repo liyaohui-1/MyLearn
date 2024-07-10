@@ -39,7 +39,7 @@ C++11新标准还提供了另外一种为vector对象赋初值的方法，即列
 - 例如：```vector<string> articles ={"a","an","the"};```
 ## 13.容器的cbegin()和cend()函数
 如果对象只需读操作而无须写操作的话最好使用常量类型(比如const_iterator)。为了便于得到const_iterator类型的返回值,C++11新标准引入了两个新函数，分别是cbegin和cend:
-```
+```c++
 vector<int> v;
 const vector<int> cv;
 auto it1 = v.begin();   //it1的类型是vector<int>::iterator
@@ -88,7 +88,7 @@ C++11新标准中，如果我们需要默认的行为，那么可以在参数列
 C++11新标准扩展了构造函数初始值的功能，使得我们可以定义所谓的**委托构造函数**。一个委托构造函数使用它所属类的其它构造函数执行它自己初始化过程，或者说它把它自己的一些(或者全部)职责委托给了其它构造函数。
 和其他构造函数一样，一个委托构造函数也有一个成员初始值的列表和一个函数体。在委托构造函数内，成员初始值列表只有一个唯一的入口，就是类名本身。和其他成员初始值一样，类名后面紧跟圆括号括起来的参数列表，参数列表必须与类中另外一个构造函数匹配。
 例子如下:
-```
+```c++
     class Sales_data{
         public:
             // 非委托构造函数使用对应的实参初始化成员
@@ -109,7 +109,7 @@ C++11新标准扩展了构造函数初始值的功能，使得我们可以定义
 ## 28.constexpr构造函数
 constexpr构造函数用于生成constexpr对象以及constexpr函数的参数或返回类型。
 例如
-```
+```c++
     class Debug{
         public:
             constexpr Debug(bool b = true) : hw(b), io(b), other(b) { }
@@ -146,14 +146,14 @@ array(固定大小的数组)和forward_list(单向链表)是新C++新标准增�
 ## 31.容器的cbegin和cend函数
 当不需要写访问时，应使用cbegin和cend。
 例如：
-```
+```c++
     list<string> a = {"Milton", "Shakespeare", "Austen"};
     list<string>::const_iterator it6 = a.cbegin();
 ```
 ## 32.容器的列表初始化
 在新标准中，我们可以对一个容器进行列表初始化。
 例：
-```
+```c++
     list<string> authors = {"Milton", "Shakespeare", "Austen"};
     vector<const char*> articles = {"a", "an", "the"};
 ```
@@ -164,7 +164,7 @@ array(固定大小的数组)和forward_list(单向链表)是新C++新标准增�
 ## 35.容器的emplace成员
 新标准引入了三个新成员-emplace_front、empalce_back和emplace，这些操作构造而不是拷贝元素。这些操作分别对应push_front、push_back和insert。运行我们将元素放在头部、尾部或者一个指定位置。
 当调用push或insert成员函数时，我们将元素类型的对象传递给它们，这些对象被拷贝到容器当中。而当我们调用一个emplace成员函数时，则是将参数传递给元素类型的构造函数。emplace成员使用这些参数在容器管理的内存空间中直接构造元素。
-```
+```c++
     //在c的末尾构造一个Sales_data对象
     //使用三个参数的Sales_data构造函数
     c.emplace_back("978-0590353403",15,15.99);
@@ -177,7 +177,7 @@ array(固定大小的数组)和forward_list(单向链表)是新C++新标准增�
 在新标准库中，我们可以调用shrink_to_fit函数来要求容器退回不需要的内存空间。size和capacity不相等时，capacity多余出来的空间。
 ## 37.string的数值转换表达式
 新标准引入了多个函数，可以实现数组数据与标准库string之间的转换
-```
+```c++
     int i = 42;
     string s =to_string(i); //将整数i转换为字符串表现形式
     double d = stod(s);     //将字符串s转换为浮点数
@@ -208,7 +208,7 @@ arg_list中的参数可能包含形如_n的名字，其中n是一个整数。这
 ```
 ## 42.列表初始化pair的返回类型
 在新标准下，我们可以对返回值进行列表初始化。
-```
+```c++
     pair<string,int> process(vector<string> &v)
     {
         //处理v
@@ -236,7 +236,7 @@ arg_list中的参数可能包含形如_n的名字，其中n是一个整数。这
 新标准库提供的这两种智能指针的区别在于管理底层指针的方式：**shared_ptr**允许多个指针指向同一个对象；**unique_ptr**则“独占”所指向的对象。标准库还定义了一个名**weak_ptr**的伴随类，它是一种弱引用，指向shared_ptr所管理的对象。这三种类型都定义在memory头文件中。
 ## 46.shared_ptr类
 因为智能指针也是模板，因此，当创建一个智能指针时，必须提供额外得信息——指针可以指向的类型。
-```
+```c++
     shared_ptr<string>    p1;  //shared_ptr，可以指向string
     shared_ptr<list<int>> p2;  //shared_ptr，可以指向int的list
 ```
@@ -247,14 +247,14 @@ arg_list中的参数可能包含形如_n的名字，其中n是一个整数。这
     int *pi =new int; //pi指向一个未初始化的int
 ```
 可以使用直接初始化方式来初始化一个动态分配的对象。可以使用传统的构造方式(使用圆括号)，在新标准下，也可以使用列表初始化(使用花括号)：
-```
+```c++
     int *pi = new int(1024);    //pi指向的对象的值为1024
     string *ps = new string(10,'9');    //*ps为"9999999999"
     vector<int> *pv = new vector<int> {0,1,2,3,4,5,6,7,8,9};
 ``` 
 ## 48.auto和动态分配
 可以提供一个括号包围的初始化器，就可以使用auto从此初始化器来推断要分配的对象的类型。但是，由于编译器要用初始化器的类型来推断要分配的类型，只有当括号中仅有单一初始化器时才可以使用auto:
-```
+```c++
     auto p1 = new auto(obj);    //p指向一个与obj类型相同的对象，该对象用obj进行初始化
     auto p2 = new auto{a,b,c};  //错误：括号中只能有单个初始化器
 ```
@@ -276,7 +276,7 @@ weak_ptr是一种不控制所指向对象生存期的智能指针，它指向由
 标准库allocator类定义在头文件memory中，它帮助我们将内存分配和对象构造分离开来。
 ## 55.将=default用于拷贝控制成员
 我们可以通过将拷贝控制成员定义为=default来显式地要求编译器生成合成的版本。
-```
+```c++
 class  Sales_data{
     public:
         //拷贝控制成员；使用default
@@ -292,7 +292,7 @@ Sales_data& Sales_data::operator=(const Sales_data&)=default;
 Note:只能对具有合成版本的成员函数使用=default(即，默认构造函数或拷贝控制成员)。
 ## 56.使用=delete阻止拷贝类对象
 如果需要禁止拷贝构造函数和拷贝赋值运算符，在新标准下，可以通过将拷贝构造函数和拷贝赋值运算符定义为**删除的函数(deleted function)** 来阻止拷贝。删除的函数是这样一种函数：虽然对其进行了声明，但不能以任何方式使用它们。在函数得参数列表后面加上=delete指出将它定义为删除的：
-```
+```c++
     struct NoCopy{
         NoCopy()=default;    //使用合成的默认构造函数
         NoCopy(const NoCopy&)=delete;   //阻止拷贝
@@ -319,7 +319,7 @@ Note：右值引用指向将要被销毁的对象。因此，可以从绑定到�
 移动构造函数类似拷贝构造函数，移动构造函数的参数也只有一个，为该类型的常引用，但是为右值引用。
 ## 61.移动构造函数通常应该是noexcept
 noexcept是我们承诺一个函数不抛出异常的一种方法。在一个函数的参数列表后指定noexcept。在一个构造函数中，noexcept出现在参数列表和初始化列表开始的冒号之间。
-```
+```c++
 class StrVec{
     public:
         StrVec(const StrVec&& other) noexcept;//移动构造函数
@@ -331,7 +331,7 @@ Note:不抛出异常的移动构造函数和移动赋值运算符必须标记为
 通过调用标准库的make_move_iterator函数将一个普通迭代器转换为一个移动带去。此函数接受一个迭代器参数，返回一个移动迭代器。
 ## 63.引用限定成员函数
 this的左值/右值属性的方式与定义const成员函数相同，即，在参数列表后放置一个**引用限定符**。
-```
+```c++
 class Foo{
     public:
         Foo& operator=(const Foo&) &;//只能向可修改的左值赋值
@@ -347,7 +347,7 @@ Foo& Foo::operator=(const Foo& rhs) &
 见day10
 ## 65.explicit类型转换运算符
 C++11新标准引入了**显式地类型转换运算符**
-```
+```c++
 class SmallInt{
     public:
         SmallInt(int i = 0):val(i)
