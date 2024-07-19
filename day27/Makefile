@@ -3,17 +3,30 @@ OBJ    	      = singleton.o
 CC	  		 := g++
 RMRF         := rm -rf
 LOCAL_CFLAGS := -std=c++11 -Werror
+OBJ_DIR		 := .objs
+OUT_DIR		 := output
 
 all:$(TARGET)
 
-$(TARGET) : $(OBJ)
-	$(CC) $^ -o $@
+dir_check:
+	@ test -d $(OBJ_DIR) || mkdir $(OBJ_DIR)
+
+out_dir_check:
+	@ test -d $(OUT_DIR) || mkdir $(OUT_DIR)
+
+$(TARGET) : out_dir_check dir_check $(OBJ)
+	$(CC) $(OBJ_DIR)/*.o -o $@
+	mv $@ $(OUT_DIR)
+
 %.o:%.cpp
 	$(CC) -c $(LOCAL_CFLAGS) $< -o $@
+	mv $@ $(OBJ_DIR)
 
 .PHONY:
 clean:
-	$(RMRF) $(OBJ)
+	$(RMRF) $(OBJ_DIR)
+rebuild:
+	$(RMRF) $(OBJ_DIR) $(OUT_DIR)
 
 # # 编译器  
 # CXX = g++  
