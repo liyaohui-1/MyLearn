@@ -3,6 +3,7 @@
 
 #build
 build
+.objs
 
 #other
 output

@@ -1,10 +1,13 @@
 TARGET        = singleton
-OBJ    	      = singleton.o
+LOCAL_PATH   := $(shell pwd)
 CC	  		 := g++
 RMRF         := rm -rf
 LOCAL_CFLAGS := -std=c++11 -Werror
 OBJ_DIR		 := .objs
+LOCAL_SRCS   := $(wildcard $(LOCAL_PATH)/*.cpp)
+SRC           = $(LOCAL_SRCS)
 OUT_DIR		 := output
+OBJS  		  = $(patsubst %.cpp, %.o, $(SRC))
 
 all:$(TARGET)
 
@@ -14,7 +17,7 @@ dir_check:
 out_dir_check:
 	@ test -d $(OUT_DIR) || mkdir $(OUT_DIR)
 
-$(TARGET) : out_dir_check dir_check $(OBJ)
+$(TARGET) : out_dir_check dir_check $(OBJS)
 	$(CC) $(OBJ_DIR)/*.o -o $@
 	mv $@ $(OUT_DIR)
 
