@@ -69,6 +69,9 @@ int main()
     //类成员函数(使用std::bind绑定类成员函数，std::placeholders::_1为占位符，顺序与原函数入参对应，顺序可调换)
     //callback = std::bind(&Randy::randy_function,randy,std::placeholders::_2,std::placeholders::_1);
     //上式也可以这么写，调用时，第2个参数在前，第1个参数在后
+
+    // auto newcallback = std::bind(calllback, arg_list);
+    //调用newcallback时，实际调用的是callback,并传给它arg_list的参数.
     Randy randy;
     callback = std::bind(&Randy::randy_function,randy,std::placeholders::_1,std::placeholders::_2);
     result = callback(1,2);
