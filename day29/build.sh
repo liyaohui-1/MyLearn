@@ -1,9 +1,12 @@
 #!/bin/bash  
   
-#  
-# main  
-#  
-  
+# 检查 setenv.sh 脚本是否存在且可执行  
+if [ ! -f "./setenv.sh" ] || [ ! -x "./setenv.sh" ]; then  
+    echo "Error: setenv.sh script does not exist or is not executable."  
+    exit 1  
+
+fi 
+
 function usage()
 {
     	echo "Usage:"  
@@ -13,11 +16,19 @@ function usage()
 	    echo "  h             - Display this help message."
 }
 
+#  
+# main  
+#
+
 while getopts bcrh opt
 do
     case $opt in
     b)
+        echo "before main script is now set to $LD_LIBRARY_PATH" 
+        source setenv.sh
+        echo "after main script is now set to $LD_LIBRARY_PATH" 
         make
+        echo "final main script is now set to $LD_LIBRARY_PATH" 
         break
         ;;
     c)
