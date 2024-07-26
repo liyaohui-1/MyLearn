@@ -4,8 +4,7 @@ RMRF 		   :=			rm -rf
 
 LOCAL_CFLAGS   :=           -std=c++11 -Werror
 LOCAL_PATH     	=           $(shell pwd)
-SRCS    	    =         	$(wildcard $(LOCAL_PATH)/src/*.cpp) \
-									$(LOCAL_PATH)/main.cpp
+SRCS    	    =         	$(wildcard $(LOCAL_PATH)/src/*.cpp $(LOCAL_PATH)/*.cpp) 									
 OBJS			=           $(patsubst %.cpp, %.o, $(SRCS))
 OUTPUT          =         	output
 OBJ_DIR			=   		.objs
