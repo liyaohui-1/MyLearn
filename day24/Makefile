@@ -1,19 +1,19 @@
-DIR_SRC =./src
+DIR_SRC = ./src
 
-SRC_NONE = $(DIR_SRC)/*.c *.c
-SRC_WILDCARD = $(wildcard $(DIR_SRC)*.c *.c)
+SRC_NONE =$(DIR_SRC)/*.c *.c
+SRC_WILDCARD = $(wildcard $(DIR_SRC)/*.c *.c)
 
-OBJ_NONE_NONE = $(patsubst %.c,%.o,$(DIR_SRC)/*.c *.c)
-OBJ_WILDCARD_NOND = $(patsubst %.c,%.o,$(wildcard ${DIR_SRC}/*.c *.c))
+OBJ_NONE_NONE = $(patsubst %.c,%.o,$(DIR_SRC)/*.c *.c) 
+OBJ_WILDCARD_NONE = $(patsubst %.c,%.o,$(wildcard $(DIR_SRC)/*.c *.c))
 
-OBJ_NONE = $(patsubst %.c,%.o,$(SRC_NONE))
+OBJ_NONE = $(patsubst %.c,%.o,$(SRC_NONE)) 
 OBJ_WILDCARD = $(patsubst %.c,%.o,$(wildcard $(SRC_WILDCARD)))
 
 all:
 	@echo $(SRC_NONE)
 	@echo $(SRC_WILDCARD)
 	@echo $(OBJ_NONE_NONE)
-	@echo $(OBJ_WILDCARD_NOND)
+	@echo $(OBJ_WILDCARD_NONE)
 	@echo $(OBJ_NONE)
 	@echo $(OBJ_WILDCARD)
 
