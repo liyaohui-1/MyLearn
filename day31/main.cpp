@@ -35,7 +35,7 @@ int main(){
 
     std::future<int> ret = fxx.get_future();
 
-    std::thread t(std::move(foo), 10);  
+    std::thread t(std::move(fxx), 10);  
 
     // 等待任务完成并获取结果  
     std::cout << "Result: " << ret.get() << std::endl;  
