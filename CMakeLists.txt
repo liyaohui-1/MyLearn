@@ -31,9 +31,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 # add_subdirectory(day20)
 # add_subdirectory(day21)
 # add_subdirectory(day22)
-add_subdirectory(day23)
-add_subdirectory(day31)
-add_subdirectory(day32)
-
-
-
+# add_subdirectory(day23)
+# add_subdirectory(day31)
+# add_subdirectory(day32)
+# add_subdirectory(day33)
+add_subdirectory(day34)
