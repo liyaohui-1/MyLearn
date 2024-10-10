@@ -10,8 +10,18 @@ int main()
     std::cout << "hello world!" << std::endl;
     std::string conf_path = "./conf.json";
 
+    std::fstream input (conf_path); 
+
+    if(!input.is_open())
+    {
+        std::cout <<"file is not exist!" << std::endl;
+        return 0;
+    }
+    
     json json_value;
-    std::fstream(conf_path) >> json_value;
+    input >> json_value;
+
+
     NodeConf node_conf;
 
     NodeDescribe node_des_;
