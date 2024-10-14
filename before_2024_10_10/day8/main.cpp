@@ -59,9 +59,9 @@ int main()
     int* p = nullptr;
 
     //4.constexpr变量
-    constexpr int mf = 20; //20是常量表达式
-    constexpr int limit = mf + 1;; //mf + 1是常量表达式
-    constexpr int sz = size(); //只有当size是一个constexpr函数时才是一条正确语句
+    constexpr int mf    = 20;       //20是常量表达式
+    constexpr int limit = mf + 1;;  //mf + 1是常量表达式
+    constexpr int sz    = size();   //只有当size是一个constexpr函数时才是一条正确语句
 
     //5.类型别名
     typedef std::vector<int> SI0; //传统定义类型别名的方法
@@ -71,18 +71,18 @@ int main()
     // auto i = 0,*p = &i; //正确,i是整数、p是整数指针
     // auto sz = 1,pi = 3.14; //错误：sz和pi的类型不一致
 
-    int i =0,&r =i;
-    auto a = r; //a是一个整数(r是i的别名，而i是一个整数)
+    int  i = 0, &r = i;
+    auto a = r;          //a是一个整数(r是i的别名，而i是一个整数)
 
-    //auto一般会忽略掉顶层const
-    const int ci = i,&cr = ci;
-    auto b = ci;  //b是一个整数(顶层const被忽略掉)
-    auto c = cr;  //c是一个整数(cr是ci的别名，ci本身是一个顶层const)
-    auto d = &i;  //d是一个整形指针(对int类型取地址就是指向整形的指针)
-    auto e = &ci; //e是一个指向整数常量的指针(对常量对象取地址是一种底层const)
-    //如果希望推断出的auto类型是一个顶层const，需要明确指出
+      //auto一般会忽略掉顶层const
+    const int ci = i, &cr = ci;
+    auto  b      = ci;           //b是一个整数(顶层const被忽略掉)
+    auto  c      = cr;           //c是一个整数(cr是ci的别名，ci本身是一个顶层const)
+    auto  d      = &i;           //d是一个整形指针(对int类型取地址就是指向整形的指针)
+    auto  e      = &ci;          //e是一个指向整数常量的指针(对常量对象取地址是一种底层const)
+                        //如果希望推断出的auto类型是一个顶层const，需要明确指出
     const auto f = ci;  //ci推演类型是int，f是const int
-    //注：符号&和*只从属于某个声明符，而非基本数据类型的一部分。
+                        //注：符号&和*只从属于某个声明符，而非基本数据类型的一部分。
 
 
     //7.decltype类型指示符
@@ -132,7 +132,7 @@ int main()
 
     //20.标准库initializer_list类
     std::string expected = "expected";
-    std::string actual = "actual";
+    std::string actual   = "actual";
     error_msg({expected,actual});
 
     std::vector<std::string> vv1 = {"a","an","the"};
@@ -172,8 +172,8 @@ int main()
     std::cout << std::endl;
 
     //33.容器的非成员函数swap
-    std::vector<int> swap1 ={1,2,3,4,5,6,7,8,9,0};
-    std::vector<int> swap2 ={6,7,8,9,0};
+    std::vector<int> swap1 = {1,2,3,4,5,6,7,8,9,0};
+    std::vector<int> swap2 = {6,7,8,9,0};
     std::cout << "before swap" << std::endl;
     for(auto swp1 : swap1)
         std::cout << swp1 << " ";

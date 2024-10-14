@@ -1,9 +1,9 @@
-#include <iostream>
 #include "test.h"
+#include <iostream>
 
 using namespace std;
 
-int main(int argc,char *argv[])
+int main(int argc, char *argv[])
 {
     cout << "test makefile!" << endl;
 
@@ -11,6 +11,6 @@ int main(int argc,char *argv[])
     T.SetA(100);
 
     cout << "m_a: " << T.GetA() << endl;
-    
+
     return 0;
 }
