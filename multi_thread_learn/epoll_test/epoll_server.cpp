@@ -129,7 +129,7 @@ int main()
                     }
                 }
             }
-            }
+        }
     }//while
 
     close(i_listenfd);

@@ -8,6 +8,8 @@
 #include <netinet/in.h>
 #include <signal.h>
 #include <arpa/inet.h>
+#include <thread>
+#include <chrono>
 
 #define MAXSIZE 1024
 #define IP_ADDR "127.0.0.1"
@@ -49,10 +51,11 @@ int main()
 	}
 	st_clnsock.sin_port = htons(IP_PORT);	//端口转换(物理字节序到网络字节序)
 
-	if(connect(i_sockfd, (struct sockaddr*)&st_clnsock, sizeof(st_clnsock)) < 0)	//主动向设置的IP和端口号的服务端发出连接
+	while(connect(i_sockfd, (struct sockaddr*)&st_clnsock, sizeof(st_clnsock)) < 0)	//主动向设置的IP和端口号的服务端发出连接
 	{
 		printf("connect Error: %s (errno: %d)\n", strerror(errno), errno);
-		exit(0);
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+		continue;
 	}
 
 	printf("======connect to server, sent data======\n");
