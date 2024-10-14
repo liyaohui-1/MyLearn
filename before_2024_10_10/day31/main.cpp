@@ -37,10 +37,12 @@ int main(){
 
     std::thread t(std::move(fxx), 10);  
 
-    // 等待任务完成并获取结果  
     std::cout << "Result: " << ret.get() << std::endl;  
 
-    t.join();
+    if(t.joinable())
+    {
+        t.join();
+    }
 
     return 0;
 }
