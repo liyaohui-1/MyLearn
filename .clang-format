@@ -5,7 +5,7 @@ BasedOnStyle: LLVM
 # 允许修改头文件顺序
 SortIncludes: false
 # 指针的*的挨着哪边,例如: int* ptr
-DerivePointerAlignment: true
+DerivePointerAlignment: false
 PointerAlignment: Left
 # 访问修饰符前的空格,例如: public/private
 AccessModifierOffset: -4
